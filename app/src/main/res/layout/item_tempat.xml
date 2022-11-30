@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layUtama"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/_3sdp"
+    android:layout_marginEnd="@dimen/_8sdp"
+    tools:context=".Activity.Activity_Main">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="?android:attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layBantu1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imgTempat"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_130sdp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/layBantu1"
+                app:layout_constraintEnd_toEndOf="@+id/layBantu1"
+                app:layout_constraintStart_toStartOf="@+id/layBantu1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+            <ImageView
+                android:id="@+id/coverImageBlur"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_130sdp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/layBantu1"
+                app:layout_constraintEnd_toEndOf="@+id/layBantu1"
+                app:layout_constraintStart_toStartOf="@+id/layBantu1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/fade" />
+
+            <TextView
+                android:id="@+id/lokasiTempat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:includeFontPadding="false"
+                android:text="Lokasi tempat"
+                android:fontFamily="@font/poppins_light"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/icoTempat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/icoTempat"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="@dimen/_8sdp"
+                app:layout_constraintBottom_toBottomOf="@id/lokasiTempat"
+                app:layout_constraintEnd_toStartOf="@+id/lokasiTempat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/lokasiTempat"
+                app:srcCompat="@drawable/ic_place" />
+
+            <TextView
+                android:id="@+id/namaTempat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_11sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:includeFontPadding="false"
+                android:text="Nama tempat"
+                android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/navBarOn"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imgTempat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lokasiTempat"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

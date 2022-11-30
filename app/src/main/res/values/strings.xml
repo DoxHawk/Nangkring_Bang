@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Nangkring Bang</string>
+    <string name="favorit">http://expresseat.formulainfor.com/Favorite.php</string>
+    <string name="kategori">http://expresseat.formulainfor.com/Kategori.php</string>
+    <string name="login">http://expresseat.formulainfor.com/Login.php</string>
+    <string name="modelMenu">http://expresseat.formulainfor.com/Menu.php</string>
+    <string name="pesanan">http://expresseat.formulainfor.com/Pesanan.php</string>
+    <string name="profil">http://expresseat.formulainfor.com/Profil.php</string>
+    <string name="register">http://expresseat.formulainfor.com/Register.php</string>
+    <string name="search_menu_title">Search</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="transaksi">http://expresseat.formulainfor.com/Transaksi.php</string>
+    <string name="ulasan">http://expresseat.formulainfor.com/Ulasan.php</string>
+
+    //System
+    <string name="s_e_empty">"Kolom masih kosong"</string>\
+    <string name="s_e_missmatch">"Password tidak sama, coba kembali"</string>
+    <string name="s_e_passmin">"Password harus terdiri 8 karakter"</string>
+    <string name="s_t_failed">"Gagal memproses permintaan"</string>
+    <string name="txt_not_login">Belum Masuk</string>
+    <string name="txt_login">Login</string>
+    <string name="title_activity_main">Main_Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    //Placeholder
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="p_title">Title</string>
+    <string name="p_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</string>
+    <string name="p_btn">Button</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_explore">Explore</string>
+    <string name="nav_orders">Orders</string>
+    <string name="nav_cart">Cart</string>
+</resources>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layUtama2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layBantu4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_200sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layBantu6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/imgTempat"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/layBantu6"
+                    app:layout_constraintDimensionRatio="H,16:9"
+                    app:layout_constraintEnd_toEndOf="@+id/layBantu6"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/layBantu6"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1" />
+
+                <ImageButton
+                    android:id="@+id/btn_fav"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:background="@drawable/circle_1"
+                    android:textOff=""
+                    android:textOn=""
+                    app:layout_constraintBottom_toBottomOf="@+id/imgTempat"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="@+id/imgTempat" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tempatIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgTempat"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:tabBackground="@drawable/indicator_selector_image"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabPaddingEnd="@dimen/_3sdp"
+                    app:tabPaddingStart="@dimen/_3sdp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layBantu7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_detail_tempat"
+            android:padding="@dimen/_16sdp"
+            app:layout_constraintStart_toStartOf="@+id/cv"
+            app:layout_constraintTop_toBottomOf="@+id/cv">
+
+            <TextView
+                android:id="@+id/namaTempat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppins_bold"
+                android:maxLines="2"
+                android:text="Menu"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgTemLoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:src="@drawable/ic_place"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTempat"
+                app:layout_constraintStart_toStartOf="@+id/namaTempat"
+                app:layout_constraintTop_toTopOf="@+id/txtTempat" />
+
+            <TextView
+                android:id="@+id/txtTempat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/p_content"
+                app:layout_constraintEnd_toEndOf="@+id/namaTempat"
+                app:layout_constraintStart_toEndOf="@+id/imgTemLoc"
+                app:layout_constraintTop_toBottomOf="@+id/namaTempat" />
+
+            <ImageView
+                android:id="@+id/imgTemTime"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_clock"
+                app:layout_constraintBottom_toBottomOf="@+id/txtTime"
+                app:layout_constraintEnd_toEndOf="@+id/imgTemLoc"
+                app:layout_constraintStart_toStartOf="@+id/imgTemLoc"
+                app:layout_constraintTop_toTopOf="@+id/txtTime" />
+
+            <TextView
+                android:id="@+id/txtTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/p_content"
+                app:layout_constraintEnd_toEndOf="@+id/namaTempat"
+                app:layout_constraintStart_toEndOf="@+id/imgTemLoc"
+                app:layout_constraintTop_toBottomOf="@+id/txtTempat" />
+
+            <RatingBar
+                android:id="@+id/ratingMenu"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:stepSize="0.5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/namaTempat"
+                app:layout_constraintTop_toBottomOf="@+id/txtTime" />
+
+            <TextView
+                android:id="@+id/a_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Rating"
+                android:textSize="@dimen/_8ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/ratingMenu"
+                app:layout_constraintStart_toEndOf="@+id/ratingMenu" />
+
+            <TextView
+                android:id="@+id/txtReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="sans-serif-light"
+                android:text="Ulasan"
+                android:textSize="@dimen/_8ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/a_rating"
+                app:layout_constraintStart_toEndOf="@+id/a_rating" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layBantu7"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layBantu8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_16sdp">
+
+                <TextView
+                    android:id="@+id/txtJudTemDet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Deskripsi tempat"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/txtTemKat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/p_title"
+                    android:maxLines="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/txtJudTemDet"
+                    app:layout_constraintTop_toBottomOf="@+id/txtJudTemDet" />
+
+                <TextView
+                    android:id="@+id/txtTemEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/p_title"
+                    android:maxLines="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/txtJudTemDet"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTemKat" />
+
+                <TextView
+                    android:id="@+id/txtTemTelp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/p_title"
+                    android:maxLines="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/txtJudTemDet"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTemEmail" />
+
+                <Button
+                    android:id="@+id/btn_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/navBarOn"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="@+id/txtJudTemDet"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="Book"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTemTelp"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

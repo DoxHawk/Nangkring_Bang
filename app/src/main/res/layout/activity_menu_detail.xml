@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layUtama2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layBantu4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_200sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:layout_constraintBottom_toTopOf="@+id/namaMenu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layBantu1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/imgMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/layBantu1"
+                    app:layout_constraintDimensionRatio="H,16:9"
+                    app:layout_constraintEnd_toEndOf="@+id/layBantu1"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/layBantu1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1" />
+
+                <ImageButton
+                    android:id="@+id/btn_fav"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:background="@drawable/circle_1"
+                    android:textOff=""
+                    android:textOn=""
+                    app:layout_constraintBottom_toBottomOf="@+id/imgMenu"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="@+id/imgMenu" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/menuIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tabPaddingStart="@dimen/_3sdp"
+                    app:tabPaddingEnd="@dimen/_3sdp"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgMenu"
+                    app:tabBackground="@drawable/indicator_selector_image"
+                    app:tabIndicatorHeight="0dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/namaMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="Menu"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="@+id/cv"
+            app:layout_constraintTop_toBottomOf="@+id/cv" />
+
+        <ImageButton
+            android:id="@+id/addCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/_8sdp"
+            android:src="@drawable/ic_add_shopping"
+            app:layout_constraintBottom_toBottomOf="@+id/hrgMenu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/namaMenu" />
+
+        <RatingBar
+            android:id="@+id/ratingMenu"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:stepSize="0.5"
+            app:layout_constraintStart_toStartOf="@+id/namaMenu"
+            app:layout_constraintTop_toBottomOf="@+id/namaMenu" />
+
+        <TextView
+            android:id="@+id/a_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="Rating"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingMenu"
+            app:layout_constraintStart_toEndOf="@+id/ratingMenu" />
+
+        <TextView
+            android:id="@+id/txtReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:fontFamily="sans-serif-light"
+            android:text="Ulasan"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/a_rating"
+            app:layout_constraintStart_toEndOf="@+id/a_rating" />
+
+        <TextView
+            android:id="@+id/hrgMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="Harga"
+            android:textColor="@color/total"
+            android:textSize="@dimen/_11ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/namaMenu"
+            app:layout_constraintTop_toBottomOf="@+id/ratingMenu" />
+
+        <TextView
+            android:id="@+id/descMenu1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:text="Deskripsi Menu"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="@+id/namaMenu"
+            app:layout_constraintTop_toBottomOf="@+id/hrgMenu" />
+
+        <TextView
+            android:id="@+id/descMenu2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:text="Menu"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintEnd_toEndOf="@+id/cv"
+            app:layout_constraintStart_toStartOf="@+id/namaMenu"
+            app:layout_constraintTop_toBottomOf="@+id/descMenu1" />
+
+        <TextView
+            android:id="@+id/revMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="Ulasan"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toStartOf="@+id/namaMenu"
+            app:layout_constraintTop_toBottomOf="@+id/descMenu2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/namaMenu"
+            app:layout_constraintTop_toBottomOf="@+id/revMenu" />
+
+        <TextView
+            android:id="@+id/txtRevSts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/namaMenu"
+            app:layout_constraintTop_toBottomOf="@+id/revMenu" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
