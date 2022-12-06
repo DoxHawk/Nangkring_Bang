@@ -27,16 +27,14 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Adapter_Places extends FirestoreRecyclerAdapter<Model_Tempat, Adapter_Places.TempatHolder> {
+public class Adapter_Places_Full extends FirestoreRecyclerAdapter<Model_Tempat, Adapter_Places_Full.TempatHolder> {
 
     private StorageReference storageReference;
     private OnItemClickListener listener;
     private Context context;
-    private DisplayMetrics metrics;
 
-    public Adapter_Places(@NonNull @NotNull FirestoreRecyclerOptions<Model_Tempat> options, DisplayMetrics metrics) {
+    public Adapter_Places_Full(@NonNull @NotNull FirestoreRecyclerOptions<Model_Tempat> options) {
         super(options);
-        this.metrics = metrics;
     }
 
     @Override
@@ -98,8 +96,6 @@ public class Adapter_Places extends FirestoreRecyclerAdapter<Model_Tempat, Adapt
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tempat, parent, false);
         storageReference    = FirebaseStorage.getInstance().getReference();
         context             = view.getContext();
-        view.getLayoutParams().width = (int) (metrics.heightPixels/2.5);
-        view.requestLayout();
         return new TempatHolder(view);
     }
 

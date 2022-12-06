@@ -3,6 +3,7 @@ package com.example.nangkringbang.Activity;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -158,11 +159,10 @@ public class Activity_Menu_Detail extends AppCompatActivity {
                                                 btn_fav.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
-                                                        Model_Menu model = value.toObject(Model_Menu.class);
                                                         Map<String, Object> item = new HashMap<>();
-                                                        item.put("fav_nama", model.getMenu_nama());
-                                                        item.put("fav_desk", model.getMenu_harga());
-                                                        item.put("fav_img", model.getMenu_img());
+                                                        item.put("fav_nama", menu.getMenu_nama());
+                                                        item.put("fav_desk", String.valueOf(menu.getMenu_harga()));
+                                                        item.put("fav_img", menu.getMenu_img());
                                                         item.put("fav_type", "menu");
 
                                                         firebaseFirestore.collection(PROFILE)
@@ -199,6 +199,7 @@ public class Activity_Menu_Detail extends AppCompatActivity {
 
                                         // Set an EditText view to get user input
                                         final EditText input = new EditText(Activity_Menu_Detail.this);
+                                        input.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
                                         alert.setView(input);
 
                                         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {

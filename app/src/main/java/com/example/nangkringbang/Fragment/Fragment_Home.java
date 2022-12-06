@@ -2,7 +2,6 @@ package com.example.nangkringbang.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -21,6 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nangkringbang.Activity.Activity_Home_Menu;
+import com.example.nangkringbang.Activity.Activity_Home_Place;
 import com.example.nangkringbang.Activity.Activity_Menu_Detail;
 import com.example.nangkringbang.Activity.Activity_Profile;
 import com.example.nangkringbang.Activity.Activity_Tempat_Detail;
@@ -59,7 +60,7 @@ public class Fragment_Home extends Fragment {
     private ImageButton btnSearch;
     private Context context;
     private RecyclerView recyclerView1, recyclerView2;
-    private TextView txtGreetingUser, txtTanggal, txtGreetDay;
+    private TextView txtGreetingUser, txtTanggal, txtGreetDay, txtViewPop, txtViewRec;
     private DisplayMetrics metrics;
     private CircleImageView imgProfile;
 
@@ -123,6 +124,8 @@ public class Fragment_Home extends Fragment {
         txtGreetingUser = view.findViewById(R.id.txtGreetingUser);
         txtTanggal = view.findViewById(R.id.txtTanggal);
         txtGreetDay = view.findViewById(R.id.txtGreetDay);
+        txtViewRec = view.findViewById(R.id.txtRecMen);
+        txtViewPop = view.findViewById(R.id.txtPopPlace);
         metrics = new DisplayMetrics();
         context = inflater.getContext();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -216,14 +219,14 @@ public class Fragment_Home extends Fragment {
     }
 
     private void getMenus() {
-        query1 = firebaseFirestore.collection(MENU).orderBy("menu_stok", Query.Direction.DESCENDING);
+        query1 = firebaseFirestore.collection(MENU).orderBy("menu_stok", Query.Direction.DESCENDING).limit(6);
         FirestoreRecyclerOptions<Model_Menu> options = new FirestoreRecyclerOptions.Builder<Model_Menu>()
                 .setQuery(query1, Model_Menu.class)
                 .build();
 
 //        AutoFitGridLayoutManager layoutManager = new AutoFitGridLayoutManager(Fragment_Home.this.getActivity());
         GridLayoutManager layoutManager = new GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false);
-        adpt_m = new Adapter_Menu(options, mUser);
+        adpt_m = new Adapter_Menu(options, mUser, view);
         recyclerView2.setAdapter(adpt_m);
         recyclerView2.setLayoutManager(layoutManager);
         recyclerView2.setNestedScrollingEnabled(true);
@@ -240,10 +243,18 @@ public class Fragment_Home extends Fragment {
                 }
             }
         });
+
+        txtViewRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Fragment_Home.this.getActivity(), Activity_Home_Menu.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getPlace() {
-        query2 = firebaseFirestore.collection(PLACES).orderBy("tempat_buka", Query.Direction.DESCENDING);
+        query2 = firebaseFirestore.collection(PLACES).orderBy("tempat_buka", Query.Direction.DESCENDING).limit(3);
         FirestoreRecyclerOptions<Model_Tempat> options = new FirestoreRecyclerOptions.Builder<Model_Tempat>()
                 .setQuery(query2, Model_Tempat.class)
                 .build();
@@ -264,6 +275,14 @@ public class Fragment_Home extends Fragment {
                         Fragment_Home.this.getActivity().startActivity(placeIntent);
                     }
                 }
+            }
+        });
+
+        txtViewPop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Fragment_Home.this.getActivity(), Activity_Home_Place.class);
+                startActivity(intent);
             }
         });
     }

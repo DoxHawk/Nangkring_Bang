@@ -18,6 +18,7 @@ import com.example.nangkringbang.R;
 import com.example.nangkringbang.databinding.ActivityTempatDetailBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,15 +90,15 @@ public class Activity_Tempat_Detail extends AppCompatActivity {
                             Log.d("TAG_TEMPAT", error.toString());
                         } else if (value != null) {
                             Model_Tempat model = value.toObject(Model_Tempat.class);
-                            SimpleDateFormat sfd = new SimpleDateFormat("H:mm");
-                            String buka = sfd.format(model.getTempat_buka());
-                            String tutup = sfd.format(model.getTempat_tutup());
+//                            SimpleDateFormat sfd = new SimpleDateFormat("H:mm");
+//                            String buka = sfd.format(model.getTempat_buka());
+//                            String tutup = sfd.format(model.getTempat_tutup());
                             namaTempat.setText(model.getTempat_nama());
                             txtTemEmail.setText("Email : "+model.getTempat_email());
                             txtTemTelp.setText("Telp : "+model.getTempat_telp());
                             txtTemKat.setText("Kategori : "+model.getTempat_owner());
                             locTempat.setText(model.getTempat_lokasi());
-                            timeTempat.setText(buka + " sampai " +tutup);
+                            timeTempat.setText(model.getTempat_buka() + " sampai " +model.getTempat_tutup());
                             tList = model.getTempat_img();
 
                             //Setup ViewPager
@@ -109,9 +110,9 @@ public class Activity_Tempat_Detail extends AppCompatActivity {
                             imgIndicator.setupWithViewPager(imgTempat);
 
                             //Check favorite
-                            firebaseFirestore.collection("users")
+                            firebaseFirestore.collection(PROFILE)
                                     .document(mUser.getUid())
-                                    .collection("favorit")
+                                    .collection(FAVORITE)
                                     .document(tempatId)
                                     .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                         @Override
@@ -125,22 +126,22 @@ public class Activity_Tempat_Detail extends AppCompatActivity {
                                                 btn_fav.setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View view) {
-                                                        firebaseFirestore.collection("users")
+                                                        firebaseFirestore.collection(PROFILE)
                                                                 .document(mUser.getUid())
-                                                                .collection("favorit")
+                                                                .collection(FAVORITE)
                                                                 .document(tempatId)
                                                                 .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    btn_fav.setImageResource(R.drawable.circle_1);
-                                                                    btn_fav.invalidate();
-                                                                    Toast.makeText(Activity_Tempat_Detail.this, "Berhasil menghapus item", Toast.LENGTH_SHORT).show();
-                                                                } else if (!task.isSuccessful()) {
-                                                                    Toast.makeText(Activity_Tempat_Detail.this, "Gagal menghapus item", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-                                                        });
+                                                                    @Override
+                                                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            btn_fav.setImageResource(R.drawable.circle_1);
+                                                                            btn_fav.invalidate();
+                                                                            Snackbar.make(main.getRoot(), "Berhasil hapus favorit", Snackbar.LENGTH_LONG).show();
+                                                                        } else if (!task.isSuccessful()) {
+                                                                            Snackbar.make(main.getRoot(), "Gagal hapus favorit", Snackbar.LENGTH_LONG).show();
+                                                                        }
+                                                                    }
+                                                                });
                                                     }
                                                 });
                                             } else {
@@ -154,22 +155,22 @@ public class Activity_Tempat_Detail extends AppCompatActivity {
                                                         item.put("fav_img", model.getTempat_img());
                                                         item.put("fav_type", "tempat");
 
-                                                        firebaseFirestore.collection("users")
+                                                        firebaseFirestore.collection(PROFILE)
                                                                 .document(mUser.getUid())
-                                                                .collection("favorit")
+                                                                .collection(FAVORITE)
                                                                 .document(tempatId)
                                                                 .set(item).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    btn_fav.setImageResource(R.drawable.circle_2);
-                                                                    btn_fav.invalidate();
-                                                                    Toast.makeText(Activity_Tempat_Detail.this, "Berhasil Ditambahkan", Toast.LENGTH_SHORT).show();
-                                                                } else if (!task.isSuccessful()) {
-                                                                    Toast.makeText(Activity_Tempat_Detail.this, "Gagal Ditambahkan", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-                                                        });
+                                                                    @Override
+                                                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            btn_fav.setImageResource(R.drawable.circle_2);
+                                                                            btn_fav.invalidate();
+                                                                            Snackbar.make(main.getRoot(), "Berhasil tambah favorit", Snackbar.LENGTH_LONG).show();
+                                                                        } else if (!task.isSuccessful()) {
+                                                                            Snackbar.make(main.getRoot(), "Gagal tambah favorit", Snackbar.LENGTH_LONG).show();
+                                                                        }
+                                                                    }
+                                                                });
                                                     }
                                                 });
                                             }

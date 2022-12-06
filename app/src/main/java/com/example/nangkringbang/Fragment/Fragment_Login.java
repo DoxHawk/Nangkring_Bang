@@ -30,7 +30,6 @@ public class Fragment_Login extends Fragment {
     private View view;
     private String s_email, s_pass;
     private TextInputLayout l_email, l_pass;
-    private TextInputEditText e_email, e_pass;
     private Snackbar snackbar;
     private TextView txtRegister;
     private Button btnLogin;

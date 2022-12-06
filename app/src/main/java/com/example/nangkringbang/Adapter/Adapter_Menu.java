@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nangkringbang.Activity.Activity_Menu_Detail;
 import com.example.nangkringbang.Model.Model_Menu;
 import com.example.nangkringbang.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.shape.CornerFamily;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -50,10 +52,17 @@ public class Adapter_Menu extends FirestoreRecyclerAdapter<Model_Menu, Adapter_M
     private Context context;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser mUser;
+    private View view;
 
-    public Adapter_Menu(@NonNull @NotNull FirestoreRecyclerOptions<Model_Menu> options, FirebaseUser mUser) {
+    private static final String PROFILE = "users";
+    private static final String FAVORITE = "favorit";
+    private static final String MENU = "menu";
+    private static final String CART = "keranjang";
+
+    public Adapter_Menu(@NonNull @NotNull FirestoreRecyclerOptions<Model_Menu> options, FirebaseUser mUser, View v) {
         super(options);
         this.mUser = mUser;
+        this.view = view;
     }
 
     private String formatRupiah(int number){
@@ -96,10 +105,10 @@ public class Adapter_Menu extends FirestoreRecyclerAdapter<Model_Menu, Adapter_M
         }
 
         //Check favorite
-        firebaseFirestore.collection("users")
+        firebaseFirestore.collection(PROFILE)
                 .document(mUser.getUid())
-                .collection("favorit")
-                .document(getSnapshots().getSnapshot(position).getId())
+                .collection(FAVORITE)
+                .document(getSnapshots().getSnapshot(holder.getBindingAdapterPosition()).getId())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value,
@@ -112,22 +121,22 @@ public class Adapter_Menu extends FirestoreRecyclerAdapter<Model_Menu, Adapter_M
                             holder.btn_fav.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    firebaseFirestore.collection("users")
+                                    firebaseFirestore.collection(PROFILE)
                                             .document(mUser.getUid())
-                                            .collection("favorit")
-                                            .document(getSnapshots().getSnapshot(position).getId())
+                                            .collection(FAVORITE)
+                                            .document(getSnapshots().getSnapshot(holder.getBindingAdapterPosition()).getId())
                                             .delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                holder.btn_fav.setImageResource(R.drawable.circle_1);
-                                                holder.btn_fav.invalidate();
-                                                Toast.makeText(context, "Berhasil menghapus item", Toast.LENGTH_SHORT).show();
-                                            } else if (!task.isSuccessful()) {
-                                                Toast.makeText(context, "Gagal menghapus item", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
+                                                @Override
+                                                public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        holder.btn_fav.setImageResource(R.drawable.circle_1);
+                                                        holder.btn_fav.invalidate();
+                                                        Snackbar.make(view, "Berhasil hapus favorit", Snackbar.LENGTH_LONG).show();
+                                                    } else if (!task.isSuccessful()) {
+                                                        Snackbar.make(view, "Gagal hapus favorit", Snackbar.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            });
                                 }
                             });
                         } else {
@@ -137,26 +146,26 @@ public class Adapter_Menu extends FirestoreRecyclerAdapter<Model_Menu, Adapter_M
                                 public void onClick(View view) {
                                     Map<String, Object> item = new HashMap<>();
                                     item.put("fav_nama", model.getMenu_nama());
-                                    item.put("fav_desk", model.getMenu_harga());
+                                    item.put("fav_desk", String.valueOf(model.getMenu_harga()));
                                     item.put("fav_img", model.getMenu_img());
                                     item.put("fav_type", "menu");
 
-                                    firebaseFirestore.collection("users")
+                                    firebaseFirestore.collection(PROFILE)
                                             .document(mUser.getUid())
-                                            .collection("favorit")
-                                            .document(getSnapshots().getSnapshot(position).getId())
+                                            .collection(FAVORITE)
+                                            .document(getSnapshots().getSnapshot(holder.getBindingAdapterPosition()).getId())
                                             .set(item).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull @NotNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                holder.btn_fav.setImageResource(R.drawable.circle_2);
-                                                holder.btn_fav.invalidate();
-                                                Toast.makeText(context, "Berhasil Ditambahkan", Toast.LENGTH_SHORT).show();
-                                            } else if (!task.isSuccessful()) {
-                                                Toast.makeText(context, "Gagal Ditambahkan", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
+                                                @Override
+                                                public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        holder.btn_fav.setImageResource(R.drawable.circle_2);
+                                                        holder.btn_fav.invalidate();
+                                                        Snackbar.make(view, "Berhasil tambah favorit", Snackbar.LENGTH_LONG).show();
+                                                    } else if (!task.isSuccessful()) {
+                                                        Snackbar.make(view, "Gagal tambah favorit", Snackbar.LENGTH_LONG).show();
+                                                    }
+                                                }
+                                            });
                                 }
                             });
                         }
@@ -166,8 +175,8 @@ public class Adapter_Menu extends FirestoreRecyclerAdapter<Model_Menu, Adapter_M
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (position != RecyclerView.NO_POSITION && listener != null){
-                    listener.onItemClick(getSnapshots().getSnapshot(position), position);
+                if (holder.getBindingAdapterPosition() != RecyclerView.NO_POSITION && listener != null){
+                    listener.onItemClick(getSnapshots().getSnapshot(holder.getBindingAdapterPosition()), holder.getBindingAdapterPosition());
                 }
             }
         });

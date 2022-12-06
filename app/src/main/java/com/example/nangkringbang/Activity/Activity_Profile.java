@@ -2,9 +2,11 @@ package com.example.nangkringbang.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -20,9 +22,12 @@ import android.widget.Toast;
 import com.example.nangkringbang.Model.Model_Profile;
 import com.example.nangkringbang.R;
 import com.example.nangkringbang.databinding.ActivityProfileBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,10 +40,13 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Activity_Profile extends AppCompatActivity {
 
     private ActivityProfileBinding main;
-    private Button btnLogout;
+    private Button btnEdit, btnLogout;
     private SharedPreferences.Editor editor;
     private TextView emailProfile, namaProfile, alamatProfile, telpProfile, userProfile;
     private ImageView imgProf;
@@ -67,8 +75,9 @@ public class Activity_Profile extends AppCompatActivity {
         emailProfile        = main.emailProfile1;
         userProfile         = main.usernameProfile1;
         telpProfile         = main.telpProfile1;
-        alamatProfile       = main.almtProfile;
+        alamatProfile       = main.almtProfile1;
         imgProf             = main.imgProfile;
+        btnEdit             = main.btnEdit;
         btnLogout           = main.btnLogout;
 
         getUserDetails();
@@ -87,7 +96,7 @@ public class Activity_Profile extends AppCompatActivity {
                         namaProfile.setText(model.getUser_nama());
                         emailProfile.setText(model.getUser_email());
                         userProfile.setText(model.getUser_username());
-                        telpProfile.setText(String.valueOf(model.getUser_telp()));
+                        telpProfile.setText(model.getUser_telp());
                         alamatProfile.setText(model.getUser_alamat());
 
                         if (!model.getUser_img().equals("default")) {
@@ -115,6 +124,58 @@ public class Activity_Profile extends AppCompatActivity {
                                 }
                             });
                         }
+
+                        btnEdit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                final View alertProfLayout = getLayoutInflater().inflate(R.layout.alert_profile, null);
+                                TextInputLayout p_nama = alertProfLayout.findViewById(R.id.txtNama);
+                                TextInputLayout p_user = alertProfLayout.findViewById(R.id.txtUser);
+                                TextInputLayout p_telp = alertProfLayout.findViewById(R.id.txtTelp);
+                                TextInputLayout p_address = alertProfLayout.findViewById(R.id.txtAddress);
+                                AlertDialog.Builder alert = new AlertDialog.Builder(Activity_Profile.this);
+
+                                alert.setTitle("Ubah profile");
+
+                                // Set view
+                                alert.setView(alertProfLayout);
+
+                                p_nama.getEditText().setText(model.getUser_nama());
+                                p_user.getEditText().setText(model.getUser_username());
+                                p_telp.getEditText().setText(model.getUser_telp());
+                                p_address.getEditText().setText(model.getUser_alamat());
+
+                                alert.setPositiveButton("Ubah", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                                        Map<String, Object> item = new HashMap<>();
+                                        item.put("user_nama", p_nama.getEditText().getText().toString());
+                                        item.put("user_username", p_user.getEditText().getText().toString());
+                                        item.put("user_telp", p_telp.getEditText().getText().toString());
+                                        item.put("user_alamat", p_address.getEditText().getText().toString());
+
+                                        firebaseFirestore.collection(PROFILE).document(mUser.getUid()).update(item)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Snackbar.make(main.getRoot(), "Berhasil ubah profile", Snackbar.LENGTH_LONG).show();
+                                                        } else if (!task.isSuccessful()) {
+                                                            Snackbar.make(main.getRoot(), "Gagal ubah profile", Snackbar.LENGTH_LONG).show();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+
+                                alert.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                    }
+                                });
+
+                                alert.show();
+                            }
+                        });
 
                         btnLogout.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {

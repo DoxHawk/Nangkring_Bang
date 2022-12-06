@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nangkringbang.Model.Model_Kategori;
-import com.example.nangkringbang.Model.Model_Tempat;
 import com.example.nangkringbang.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -28,14 +27,14 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Adapter_Category extends FirestoreRecyclerAdapter<Model_Kategori, Adapter_Category.KategoriHolder> {
+public class Adapter_Category_Full extends FirestoreRecyclerAdapter<Model_Kategori, Adapter_Category_Full.KategoriHolder> {
 
     private StorageReference storageReference;
     private OnItemClickListener listener;
     private Context context;
     private DisplayMetrics metrics;
 
-    public Adapter_Category(@NonNull @NotNull FirestoreRecyclerOptions<Model_Kategori> options, DisplayMetrics metrics) {
+    public Adapter_Category_Full(@NonNull @NotNull FirestoreRecyclerOptions<Model_Kategori> options, DisplayMetrics metrics) {
         super(options);
         this.metrics = metrics;
     }
@@ -87,7 +86,7 @@ public class Adapter_Category extends FirestoreRecyclerAdapter<Model_Kategori, A
     @NotNull
     @Override
     public KategoriHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_full, parent, false);
         storageReference    = FirebaseStorage.getInstance().getReference();
         context             = view.getContext();
 //        view.getLayoutParams().width = (int) (metrics.heightPixels/2.5);

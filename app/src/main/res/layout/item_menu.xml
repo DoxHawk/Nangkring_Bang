@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_16sdp"
     android:layout_marginEnd="@dimen/_16sdp"
-    android:layout_marginBottom="32dp">
+    android:layout_marginBottom="@dimen/_32sdp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv"

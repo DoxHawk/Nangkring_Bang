@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:elevation="@dimen/_3sdp"
     android:layout_marginEnd="@dimen/_8sdp"
+    android:layout_marginBottom="@dimen/_16sdp"
     tools:context=".Activity.Activity_Main">
 
     <androidx.cardview.widget.CardView
