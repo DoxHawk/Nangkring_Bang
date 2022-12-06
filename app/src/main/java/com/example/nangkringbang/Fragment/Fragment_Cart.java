@@ -21,6 +21,7 @@ import com.example.nangkringbang.Activity.Activity_Checkout;
 import com.example.nangkringbang.Activity.Activity_Menu_Detail;
 import com.example.nangkringbang.Adapter.Adapter_Cart;
 import com.example.nangkringbang.Model.Model_Keranjang;
+import com.example.nangkringbang.Model.Model_Pesanan;
 import com.example.nangkringbang.Model.Model_Profile;
 import com.example.nangkringbang.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -163,61 +164,74 @@ public class Fragment_Cart extends Fragment {
                                                     .whereEqualTo("user_type", "admin")
                                                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                                         @Override
-                                                        public void onEvent(@Nullable QuerySnapshot value,
+                                                        public void onEvent(@Nullable QuerySnapshot dataAdmin,
                                                                             @Nullable FirebaseFirestoreException error) {
                                                             if (error != null) {
                                                                 Log.d(TAG, error.toString());
-                                                            } else if (value.getDocuments().size() > 0) {
-                                                                //Insert pesanan admin
-                                                                Map<String, Object> itemAdmin = new HashMap<>();
-                                                                itemAdmin.put("pesanan_driver", "");
-                                                                itemAdmin.put("pesanan_alamat", profile.getUser_alamat());
-                                                                itemAdmin.put("pesanan_bukti", "");
-                                                                itemAdmin.put("pesanan_catatan", "");
-                                                                itemAdmin.put("pesanan_metode", "Cash");
-                                                                itemAdmin.put("pesanan_status", "Proses");
-                                                                itemAdmin.put("pesanan_sub", sum);
-                                                                itemAdmin.put("pesanan_tgl_order", FieldValue.serverTimestamp());
-                                                                itemAdmin.put("pesanan_tgl_bayar", FieldValue.serverTimestamp());
-                                                                firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(ORDERS).
-                                                                        add(itemAdmin);
+                                                            } else if (dataAdmin.getDocuments().size() > 0) {
+                                                                List<DocumentSnapshot> snapshotList = dataAdmin.getDocuments();
+                                                                for (DocumentSnapshot documentAdmin : snapshotList) {
+                                                                    //Insert pesanan admin
+                                                                    Map<String, Object> itemAdmin = new HashMap<>();
+                                                                    itemAdmin.put("pesanan_driver", "default");
+                                                                    itemAdmin.put("pesanan_alamat", profile.getUser_alamat());
+                                                                    itemAdmin.put("pesanan_bukti", "default");
+                                                                    itemAdmin.put("pesanan_catatan", "default");
+                                                                    itemAdmin.put("pesanan_metode", "Cash");
+                                                                    itemAdmin.put("pesanan_status", "Proses");
+                                                                    itemAdmin.put("pesanan_sub", sum);
+                                                                    itemAdmin.put("pesanan_tgl_order", FieldValue.serverTimestamp());
+                                                                    itemAdmin.put("pesanan_tgl_bayar", FieldValue.serverTimestamp());
+                                                                    firebaseFirestore.collection(PROFILE).document(documentAdmin.getId()).collection(ORDERS)
+                                                                                    .add(itemAdmin).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<DocumentReference> taskAdmin) {
+                                                                                    if (taskAdmin.isSuccessful()) {
+                                                                                        //Insert pesanan user
+                                                                                        Map<String, Object> itemUser = new HashMap<>();
+                                                                                        itemUser.put("pesanan_bukti", "default");
+                                                                                        itemUser.put("pesanan_catatan", "default");
+                                                                                        itemUser.put("pesanan_metode", "Cash");
+                                                                                        itemUser.put("pesanan_status", "Proses");
+                                                                                        itemUser.put("pesanan_sub", sum);
+                                                                                        itemUser.put("pesanan_tgl_order", FieldValue.serverTimestamp());
+                                                                                        itemUser.put("pesanan_tgl_bayar", FieldValue.serverTimestamp());
+                                                                                        firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(ORDERS).
+                                                                                                add(itemUser).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                                                                                    @Override
+                                                                                                    public void onComplete(@NonNull Task<DocumentReference> taskUser) {
+                                                                                                        if (taskUser.isSuccessful()) {
+                                                                                                            firebaseFirestore.collection(PROFILE).document(mUser.getUid()).
+                                                                                                                    collection(CART).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                                                                                        @Override
+                                                                                                                        public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value,
+                                                                                                                                            @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                                                                                                                            if (error != null) {
+                                                                                                                                Log.d(TAG, "onEvent: getDataCart" + error);
+                                                                                                                            } else if (value.size() > 0) {
+                                                                                                                                for (DocumentSnapshot snapshot : value.getDocuments()) {
+                                                                                                                                    //Copy admin
+                                                                                                                                    copyFirestoreDocument(firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(CART).document(snapshot.getId()),
+                                                                                                                                            firebaseFirestore.collection(PROFILE).document(documentAdmin.getId()).collection(ORDERS).document(taskAdmin.getResult().getId()).collection("detail_pesanan").document(snapshot.getId()));
 
-                                                            }
-                                                        }
-                                                    });
+                                                                                                                                    //Move user
+                                                                                                                                    moveFirestoreDocument(firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(CART).document(snapshot.getId()),
+                                                                                                                                            firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(ORDERS).document(taskUser.getResult().getId()).collection("detail_pesanan").document(snapshot.getId()));
 
-                                            //Insert pesanan user
-                                            Map<String, Object> itemUser = new HashMap<>();
-                                            itemUser.put("pesanan_bukti", "");
-                                            itemUser.put("pesanan_catatan", "");
-                                            itemUser.put("pesanan_metode", "Cash");
-                                            itemUser.put("pesanan_status", "Proses");
-                                            itemUser.put("pesanan_sub", sum);
-                                            itemUser.put("pesanan_tgl_order", FieldValue.serverTimestamp());
-                                            itemUser.put("pesanan_tgl_bayar", FieldValue.serverTimestamp());
-                                            firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(ORDERS).
-                                                    add(itemUser).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                                                            if (error != null) {
-                                                                Toast.makeText(context, "Error loading data", Toast.LENGTH_SHORT).show();
-                                                                Log.d("TAG_INPUT_CART", error.toString());
-                                                            } else if (value.exists()) {
-                                                                firebaseFirestore.collection(PROFILE).document(mUser.getUid()).
-                                                                        collection(CART).addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                                            @Override
-                                                                            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value,
-                                                                                                @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
-                                                                                if (error != null){
-                                                                                    Log.d(TAG, "onEvent: getDataCart"+error);
-                                                                                }else if (value.size() > 0){
-                                                                                    for (DocumentSnapshot snapshot : value.getDocuments()){
-                                                                                        moveFirestoreDocument(firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(CART).document(snapshot.getId()),
-                                                                                                firebaseFirestore.collection(PROFILE).document(mUser.getUid()).collection(ORDERS).document(task.getResult().getId()).collection("detail_pesanan").document(snapshot.getId()));
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    });
+                                                                                                        }
+                                                                                                    }
+                                                                                                });
+                                                                                    } else if (!taskAdmin.isSuccessful()){
+                                                                                        Log.d(TAG, "Failed to add orders");
                                                                                     }
                                                                                 }
-                                                                            }
-                                                                        });
+                                                                            });
+                                                                }
+
                                                             }
                                                         }
                                                     });
@@ -228,6 +242,36 @@ public class Fragment_Cart extends Fragment {
                 }
             });
         }
+    }
+
+    public void copyFirestoreDocument(DocumentReference fromPath, final DocumentReference toPath) {
+        fromPath.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        toPath.set(document.getData())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     public void moveFirestoreDocument(DocumentReference fromPath, final DocumentReference toPath) {
